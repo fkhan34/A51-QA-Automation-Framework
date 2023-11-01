@@ -13,7 +13,7 @@ public class Homework17 extends BaseTest{
 
         String expectedSongAddedMessage = "Added 1 song into \"k\" ";
 
-        navigateToLoginPage("https://qa.koel.app/");
+        navigateToLoginPage();
         provideEmail("faizan.khan@testpro.io");
         providePassword("master21");
         clickSubmit();
