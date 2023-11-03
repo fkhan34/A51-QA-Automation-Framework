@@ -11,7 +11,7 @@ public class Homework17 extends BaseTest{
 
     public void addSongToPlaylist() throws InterruptedException {
 
-        String expectedSongAddedMessage = "Added 1 song into \"k\" ";
+        String expectedSongAddedMessage = "Added 1 song into \"k.\"";
 
         navigateToLoginPage();
         provideEmail("faizan.khan@testpro.io");
@@ -38,7 +38,7 @@ public class Homework17 extends BaseTest{
         Thread.sleep(2000);
     }
     public void selectFirstSongResult() throws InterruptedException {
-        WebElement firstSong = driver.findElement(By.xpath("//section[@id='songResultsWrapper']//tr[@class='song-item][1]"));
+        WebElement firstSong = driver.findElement(By.xpath("//section[@id='songResultsWrapper']//tr[@class='song-item'][1]"));
         firstSong.click();
         Thread.sleep(2000);
     }
@@ -53,8 +53,8 @@ public class Homework17 extends BaseTest{
         Thread.sleep(2000);
     }
     public String getAddToPlaylistSuccessMessage() throws InterruptedException {
-    WebElement notification = driver.findElement(By.cssSelector("div.success.show"));
-    return notification.getText();
+        WebElement notification = driver.findElement(By.cssSelector("div.success.show"));
+        return notification.getText();
     }
 
 }
