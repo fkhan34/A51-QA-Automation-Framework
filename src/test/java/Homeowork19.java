@@ -8,7 +8,7 @@ public class Homeowork19 extends BaseTest {
 
     public void deletePlaylist() throws InterruptedException {
 
-        String expectedDeletedPlaylistMessage = "Deleted Playlist \"k.\"";
+        String expectedDeletedPlaylistMessage = "Deleted playlist \"k.\"";
 
         navigateToLoginPage();
         provideEmail("faizan.khan@testpro.io");
@@ -30,9 +30,10 @@ public class Homeowork19 extends BaseTest {
         deletePlaylistBtn.click();
         Thread.sleep(1000);
     }
-    public void clickOkConfirmation () {
+    public void clickOkConfirmation () throws InterruptedException {
         WebElement okConfirmationBtn = driver.findElement(By.xpath("//nav//button[@class='ok']"));
         okConfirmationBtn.click();
+        Thread.sleep(2000);
     }
     public String getDeletedPlaylistSuccessMessage () {
         WebElement notification = driver.findElement(By.cssSelector("div.success.show"));
