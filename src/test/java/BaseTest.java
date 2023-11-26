@@ -5,23 +5,48 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.annotations.*;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
 
-
-/*import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+/*
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 */
 
 public class BaseTest {
+
+    //References start here
+
+
+    public static WebDriver driver = null;
+    public static String url = null;
+    public static String gridUri = "10.0.0.206:4444";
+
+    public static WebDriverWait wait = null;
+
+    public static Actions actions = null;
+
+    //References End here
+
+    // DataProviders Start here
 
     @DataProvider(name="LoginData")
     public Object[][] getDataFromDataProvider(){
@@ -33,44 +58,180 @@ public class BaseTest {
         };
     }
 
-    /*
-    @DataProvider(name="excel-data")
+   /* @DataProvider(name="excel-data")
     public Object[][] excelDP() throws IOException {
         Object [][] arrObj;
         //Object[][] arrObj = getExcelData("./src/test/resources/test.xlsx", "test.xlsx");
         arrObj = getExcelData("./src/test/resources/test.xlsx", "Sheet1");
         return arrObj;
-    }
+    } */
 
-     */
+    // DataProviders End here
 
 
-    public WebDriver driver;
-    public String url = "https://qa.koel.app";
+    //References start here
 
-    public WebDriverWait wait;
+
+    //public static WebDriver driver = null;
+   // public String url = "https://qa.koel.app";
+
+    //public static WebDriverWait wait = null;
+
+   // public static Actions actions = null;
+
+    private static final ThreadLocal <WebDriver> threadDriver = new ThreadLocal<>();
+
+    //References End here
+
 
 
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
+        //WebDriverManager.firefoxdriver().setup();
     }
 
     @BeforeMethod
     @Parameters({"BaseURL"})
-    public void launchBrowser(String BaseURL){
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        driver = new ChromeDriver(options);
+    public void setupBrowser(String BaseURL) throws MalformedURLException {
+        threadDriver.set(pickBrowser(System.getProperty("browser")));
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        navigateToLoginPage(BaseURL);
+    }
+
+    public static WebDriver getDriver(){
+        return threadDriver.get();
+    }
+
+//    @BeforeMethod
+//    @Parameters({"BaseURL"})
+//    public void launchBrowser(String BaseURL) throws MalformedURLException {
+//        driver = pickBrowser(System.getProperty("browser"));
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        actions = new Actions(driver);
+//        driver.manage().window().maximize();
+//        navigateToLoginPage(BaseURL);
+//    }
+
+  /*  public static WebDriver pickBrowser(String browser) throws MalformedURLException {
+
+        DesiredCapabilities caps = new DesiredCapabilities();
+        String gridURL = "http://10.0.0.206:4444";
+
+        switch (browser){
+
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                return driver = new FirefoxDriver();
+            case "MicrosoftEdge":
+                WebDriverManager.edgedriver().setup();
+                EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--remote-allow-origins=*");
+                return driver = new EdgeDriver(edgeOptions);
+
+            //Selenium Grid
+            case "grid-edge": // gradle cleam test -Dbrowser=grid-edge
+                caps.setCapability("browser", "MicrosoftEdge");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+
+            case "grid-firefox": // gradle clean test -Dbrowser=grid-firefox
+                caps.setCapability("browserName", "firefox");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+
+            case "grid-chrome": // gradle clean test -Dbrowser=grid-chrome
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+
+            case "cloud":
+                return lambdaTest();
+
+            default:
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--remote-allow-origins=*");
+                return driver = new ChromeDriver(options);
+        }
+    } */
+
+    public static WebDriver lambdaTest() throws MalformedURLException {
+        String username = "muhammadtestpro";
+        String authKey = "SE8iAUT7KcFw8hrr9shssoC2PQCg4CTki1fpmP3OX6VDNr5ksJ";
+        String hub = "@hub.lambdatest.com/wd/hub";
+
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("platform", "Windows 10");
+        caps.setCapability("browserName", "Chrome");
+        caps.setCapability("version", "120.0");
+        caps.setCapability("resolution", "12024x768");
+        caps.setCapability("build", "TestNG with Java");
+        caps.setCapability("name", BaseTest.class.getName());
+        caps.setCapability("plugin", "java-testNG");
+        //caps.setCapability("plugin", "java-testNG");
+
+
+        return new RemoteWebDriver(new URL("https://" +username+ ":" +authKey + hub), caps);
+    }
+
+
+//    @AfterMethod
+//    public void closeBrowser(){
+//        driver.quit();
+//    }
+
+    public void launchBrowser(String BaseURL) throws MalformedURLException {
+        //ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--remote-allow-origins=*");
+        // driver = new ChromeDriver(options);
+        //driver = new FirefoxDriver();
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver = pickBrowser(System.getProperty("browser"));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        actions = new Actions(driver);
         driver.manage().window().maximize();
         navigateToLoginPage(BaseURL);
     }
 
+    public static WebDriver pickBrowser(String browser) throws MalformedURLException {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        String gridURL = "http://10.0.0.206:4444"; //Replace it with yours.
+        switch (browser){
+            case "firefox": // gradle clean test -Dbrowser=firefox
+                WebDriverManager.firefoxdriver().setup();
+                return driver = new FirefoxDriver();
+
+            case "MicrosoftEdge": // gradle clean test -Dbrowser=MicrosoftEdge
+                WebDriverManager.edgedriver().setup();
+                EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--remote-allow-origins=*");
+                return driver = new EdgeDriver(edgeOptions);
+
+            case "grid-edge": // gradle clean test -Dbrowser=grid-edge
+                caps.setCapability("browserName", "MicrosoftEdge");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+
+            case "grid-firefox": // gradle clean test -Dbrowser=grid-firefox
+                caps.setCapability("browserName", "firefox");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+
+            case "grid-chrome": // gradle clean test -Dbrowser=grid-chrome
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+            default:
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                return driver = new ChromeDriver(chromeOptions);
+
+        }
+    }
+
     @AfterMethod
-    public void closeBrowser(){
-        driver.quit();
+    public void tearDown(){
+        threadDriver.get().close();
+        threadDriver.remove();
     }
 
 
@@ -79,7 +240,7 @@ public class BaseTest {
     }
 
     public void navigateToLoginPage(String BaseURL){
-        driver.get(BaseURL);
+        getDriver().get(BaseURL);
     }
 
     public void provideEmail(String email){
@@ -101,7 +262,7 @@ public class BaseTest {
     }
 
 
-    /*public String [][] getExcelData(String fileName, String sheetName){
+   /* public String [][] getExcelData(String fileName, String sheetName) {
         String [][] data = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(fileName);
@@ -126,14 +287,18 @@ public class BaseTest {
         } catch(Exception e){
             System.out.println("Something went wrong." +e);
         }
-        return data; */
-    }
+        return data;
+    } */
 
 
-/**
- * Helper Methods Start here
- */
+    /**
+     * Helper Methods Start here
+     */
 
-/**
- * Helper Methods End here
- */
+    /**
+     * Helper Methods End here
+     */
+
+
+
+}
