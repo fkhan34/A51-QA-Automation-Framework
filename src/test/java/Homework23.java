@@ -33,7 +33,7 @@ public class Homework23 extends BaseTest {
         }
 
         public void doubleClickPlaylist() {
-           // WebElement playlistk1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']")));
+            WebElement playlistk1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']")));
             Actions a = new Actions(driver);
             a.doubleClick(playlistk1).perform();
         }
@@ -42,7 +42,7 @@ public class Homework23 extends BaseTest {
              editButton.click();
          } */
         public void renamePlaylistk() {
-           // WebElement editPlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(/*"li.playlist.playlist.editing"*/"[name='name']")));
+            WebElement editPlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(/*"li.playlist.playlist.editing"*/"[name='name']")));
             // Actions a = new Actions(driver);
             // a.doubleClick(editPlaylistBtn).perform();
             editPlaylistBtn.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
@@ -50,7 +50,7 @@ public class Homework23 extends BaseTest {
             editPlaylistBtn.sendKeys(Keys.ENTER);
         }
         public String getUpdatedPlaylistSuccessMessage () {
-            //WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
+            WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
             return notification.getText();
         }
     }

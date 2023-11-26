@@ -37,8 +37,13 @@ public class BaseTest {
 
 
     public static WebDriver driver = null;
+
     public static String url = null;
-    public static String gridUri = "10.0.0.206:4444";
+    public static String gridUri = "http://192.168.0.69:4444";
+
+   // public static String url = "https://qa.koel.app";
+   // public static String gridUri = "http://192.168.0.69:4444";
+
 
     public static WebDriverWait wait = null;
 
@@ -113,7 +118,7 @@ public class BaseTest {
 //        navigateToLoginPage(BaseURL);
 //    }
 
-  /*  public static WebDriver pickBrowser(String browser) throws MalformedURLException {
+   public static WebDriver pickBrowser(String browser) throws MalformedURLException {
 
         DesiredCapabilities caps = new DesiredCapabilities();
         String gridURL = "http://10.0.0.206:4444";
@@ -130,7 +135,7 @@ public class BaseTest {
                 return driver = new EdgeDriver(edgeOptions);
 
             //Selenium Grid
-            case "grid-edge": // gradle cleam test -Dbrowser=grid-edge
+            case "grid-edge": // gradle clean test -Dbrowser=grid-edge
                 caps.setCapability("browser", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
 
@@ -151,11 +156,11 @@ public class BaseTest {
                 options.addArguments("--remote-allow-origins=*");
                 return driver = new ChromeDriver(options);
         }
-    } */
+    }
 
     public static WebDriver lambdaTest() throws MalformedURLException {
-        String username = "muhammadtestpro";
-        String authKey = "SE8iAUT7KcFw8hrr9shssoC2PQCg4CTki1fpmP3OX6VDNr5ksJ";
+        String username = "faizan.khantestpro";
+        String authKey = "yTQKLuAZkxA3LTS0mJjuJn30UT9EqrTr9UYfiBoQIRxk3XfwMt";
         String hub = "@hub.lambdatest.com/wd/hub";
 
         DesiredCapabilities caps = new DesiredCapabilities();
@@ -194,39 +199,6 @@ public class BaseTest {
         navigateToLoginPage(BaseURL);
     }
 
-    public static WebDriver pickBrowser(String browser) throws MalformedURLException {
-        DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://192.168.0.69:4444"; //Replace it with yours.
-        switch (browser){
-            case "firefox": // gradle clean test -Dbrowser=firefox
-                WebDriverManager.firefoxdriver().setup();
-                return driver = new FirefoxDriver();
-
-            case "MicrosoftEdge": // gradle clean test -Dbrowser=MicrosoftEdge
-                WebDriverManager.edgedriver().setup();
-                EdgeOptions edgeOptions = new EdgeOptions();
-                edgeOptions.addArguments("--remote-allow-origins=*");
-                return driver = new EdgeDriver(edgeOptions);
-
-            case "grid-edge": // gradle clean test -Dbrowser=grid-edge
-                caps.setCapability("browserName", "MicrosoftEdge");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-
-            case "grid-firefox": // gradle clean test -Dbrowser=grid-firefox
-                caps.setCapability("browserName", "firefox");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-
-            case "grid-chrome": // gradle clean test -Dbrowser=grid-chrome
-                caps.setCapability("browserName", "chrome");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            default:
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--remote-allow-origins=*");
-                return driver = new ChromeDriver(chromeOptions);
-
-        }
-    }
 
     @AfterMethod
     public void tearDown(){
