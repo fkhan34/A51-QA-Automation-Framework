@@ -196,7 +196,7 @@ public class BaseTest {
 
     public static WebDriver pickBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://10.0.0.206:4444"; //Replace it with yours.
+        String gridURL = "http://192.168.0.69:4444"; //Replace it with yours.
         switch (browser){
             case "firefox": // gradle clean test -Dbrowser=firefox
                 WebDriverManager.firefoxdriver().setup();
