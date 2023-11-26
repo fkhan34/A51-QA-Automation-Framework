@@ -38,7 +38,7 @@ public class BaseTest {
 
     public static WebDriver driver = null;
     public static String url = null;
-    public static String gridUri = "10.0.0.206:4444";
+    public static String gridUri = "http://192.168.0.69:4444";
 
     public static WebDriverWait wait = null;
 
@@ -116,7 +116,7 @@ public class BaseTest {
   /*  public static WebDriver pickBrowser(String browser) throws MalformedURLException {
 
         DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://10.0.0.206:4444";
+        String gridURL = "http://192.168.0.69:4444";
 
         switch (browser){
 
@@ -196,7 +196,7 @@ public class BaseTest {
 
     public static WebDriver pickBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://10.0.0.206:4444"; //Replace it with yours.
+        String gridURL = "http://192.168.0.69:4444"; 
         switch (browser){
             case "firefox": // gradle clean test -Dbrowser=firefox
                 WebDriverManager.firefoxdriver().setup();
