@@ -21,12 +21,11 @@ public class Homework23 extends BaseTest {
         @FindBy (css = "div.success.show")
         WebElement notification;
         @Test
-        public void renamePlaylist() throws InterruptedException {
+        public void renamePlaylist() {
             navigateToLoginPage();
             provideEmail("faizan.khan@testpro.io");
             providePassword("master21");
             clickSubmit();
-            Thread.sleep(2000);
             doubleClickPlaylist();
             //clickEdit();
             renamePlaylistk();
