@@ -1,6 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,12 +12,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Reporter;
 import org.testng.annotations.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -33,18 +28,6 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 
 public class BaseTest {
 
-    //References start here
-
-
-    public static WebDriver driver = null;
-    public static String url = null;
-    public static String gridUri = "http://192.168.0.69:4444";
-
-    public static WebDriverWait wait = null;
-
-    public static Actions actions = null;
-
-    //References End here
 
     // DataProviders Start here
 
@@ -57,8 +40,8 @@ public class BaseTest {
                 {"",""}
         };
     }
-
-   /* @DataProvider(name="excel-data")
+/*
+    @DataProvider(name="excel-data")
     public Object[][] excelDP() throws IOException {
         Object [][] arrObj;
         //Object[][] arrObj = getExcelData("./src/test/resources/test.xlsx", "test.xlsx");
@@ -68,27 +51,24 @@ public class BaseTest {
 
     // DataProviders End here
 
-
     //References start here
 
 
-    //public static WebDriver driver = null;
-   // public String url = "https://qa.koel.app";
+    public static WebDriver driver = null;
+    public String url = "https://qa.koel.app";
 
-    //public static WebDriverWait wait = null;
+    public WebDriverWait wait;
 
-   // public static Actions actions = null;
+    public static Actions actions = null;
 
     private static final ThreadLocal <WebDriver> threadDriver = new ThreadLocal<>();
 
     //References End here
 
 
-
     @BeforeSuite
     static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-        //WebDriverManager.firefoxdriver().setup();
+//        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeMethod
@@ -102,6 +82,9 @@ public class BaseTest {
     public static WebDriver getDriver(){
         return threadDriver.get();
     }
+    public BaseTest() {
+        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+    }
 
 //    @BeforeMethod
 //    @Parameters({"BaseURL"})
@@ -113,7 +96,7 @@ public class BaseTest {
 //        navigateToLoginPage(BaseURL);
 //    }
 
-  /*  public static WebDriver pickBrowser(String browser) throws MalformedURLException {
+    public static WebDriver pickBrowser(String browser) throws MalformedURLException {
 
         DesiredCapabilities caps = new DesiredCapabilities();
         String gridURL = "http://192.168.0.69:4444";
@@ -151,11 +134,11 @@ public class BaseTest {
                 options.addArguments("--remote-allow-origins=*");
                 return driver = new ChromeDriver(options);
         }
-    } */
+    }
 
     public static WebDriver lambdaTest() throws MalformedURLException {
-        String username = "muhammadtestpro";
-        String authKey = "SE8iAUT7KcFw8hrr9shssoC2PQCg4CTki1fpmP3OX6VDNr5ksJ";
+        String username = "faizan.khantestpro";
+        String authKey = "yTQKLuAZkxA3LTS0mJjuJn30UT9EqrTr9UYfiBoQIRxk3XfwMt";
         String hub = "@hub.lambdatest.com/wd/hub";
 
         DesiredCapabilities caps = new DesiredCapabilities();
@@ -177,56 +160,6 @@ public class BaseTest {
 //    public void closeBrowser(){
 //        driver.quit();
 //    }
-
-    public void launchBrowser(String BaseURL) throws MalformedURLException {
-        //ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--remote-allow-origins=*");
-        // driver = new ChromeDriver(options);
-        //driver = new FirefoxDriver();
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver = pickBrowser(System.getProperty("browser"));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        actions = new Actions(driver);
-        driver.manage().window().maximize();
-        navigateToLoginPage(BaseURL);
-    }
-
-    public static WebDriver pickBrowser(String browser) throws MalformedURLException {
-        DesiredCapabilities caps = new DesiredCapabilities();
-        String gridURL = "http://192.168.0.69:4444"; 
-        switch (browser){
-            case "firefox": // gradle clean test -Dbrowser=firefox
-                WebDriverManager.firefoxdriver().setup();
-                return driver = new FirefoxDriver();
-
-            case "MicrosoftEdge": // gradle clean test -Dbrowser=MicrosoftEdge
-                WebDriverManager.edgedriver().setup();
-                EdgeOptions edgeOptions = new EdgeOptions();
-                edgeOptions.addArguments("--remote-allow-origins=*");
-                return driver = new EdgeDriver(edgeOptions);
-
-            case "grid-edge": // gradle clean test -Dbrowser=grid-edge
-                caps.setCapability("browserName", "MicrosoftEdge");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-
-            case "grid-firefox": // gradle clean test -Dbrowser=grid-firefox
-                caps.setCapability("browserName", "firefox");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-
-            case "grid-chrome": // gradle clean test -Dbrowser=grid-chrome
-                caps.setCapability("browserName", "chrome");
-                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
-            default:
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--remote-allow-origins=*");
-                return driver = new ChromeDriver(chromeOptions);
-
-        }
-    }
 
     @AfterMethod
     public void tearDown(){
@@ -261,8 +194,8 @@ public class BaseTest {
         submit.click();
     }
 
-
-   /* public String [][] getExcelData(String fileName, String sheetName) {
+/*
+    public String [][] getExcelData(String fileName, String sheetName) {
         String [][] data = null;
         try{
             FileInputStream fileInputStream = new FileInputStream(fileName);
@@ -288,8 +221,8 @@ public class BaseTest {
             System.out.println("Something went wrong." +e);
         }
         return data;
-    } */
-
+    }
+*/
 
     /**
      * Helper Methods Start here
