@@ -5,9 +5,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.AllSongsPage;
-import pages.HomePage;
-import pages.LoginPage;
+import Pages.AllSongsPage;
+import Pages.HomePage;
+import Pages.LoginPage;
 
 import java.util.List;
 

@@ -55,7 +55,7 @@ public class BaseTest {
 
 
     public static WebDriver driver = null;
-    public String url = "https://qa.koel.app";
+    public static String url = "https://qa.koel.app";
 
     public WebDriverWait wait;
 
@@ -82,9 +82,7 @@ public class BaseTest {
     public static WebDriver getDriver(){
         return threadDriver.get();
     }
-    public BaseTest() {
-        wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-    }
+
 
 //    @BeforeMethod
 //    @Parameters({"BaseURL"})
@@ -168,7 +166,7 @@ public class BaseTest {
     }
 
 
-    public void navigateToLoginPage(){
+    public static void navigateToLoginPage(){
         driver.get(url);
     }
 

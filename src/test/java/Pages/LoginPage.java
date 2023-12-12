@@ -1,4 +1,4 @@
-package pages;
+package Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class LoginPage extends pages.BasePage {
+public class LoginPage extends Pages.BasePage {
 
     @FindBy(css = "button[type='submit']")
     private WebElement submitButtonLocator;
@@ -58,8 +58,8 @@ public class LoginPage extends pages.BasePage {
 // and returns an instance of the "LoginPage" class.
 
     public void provideLoginSucceed() {
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
+        provideEmail("faizan.khan@testpro.io");
+        providePassword("master21");
         clickSubmitBtn();
     }
 // The "provideLoginSucceed" method enters predefined email and password data

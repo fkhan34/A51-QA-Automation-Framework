@@ -1,4 +1,4 @@
-package pages;
+package Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -64,7 +64,7 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void clickSubmit() {
+    public static void clickSubmit() {
     }
 // The findElement method finds the specified element on the page, waiting for its visibility
 // using wait.until(ExpectedConditions.visibilityOf(element)). Then, it returns the fou
