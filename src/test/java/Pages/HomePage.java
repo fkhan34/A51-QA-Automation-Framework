@@ -1,8 +1,10 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -39,7 +41,12 @@ public class HomePage extends Pages.BasePage {
     @FindBy(css = "[data-testid='playlist-context-menu-create-simple']")
     private WebElement chooseCreateNewPlaylist;
     // chooseCreateNewPlaylist: Represents the element on the page used for selecting to create a new playlist.
-
+    @FindBy (xpath = "//li[@class='playlist playlist']")
+    private WebElement playlistk1;
+    @FindBy (xpath = "[name='name']")
+    private WebElement editPlaylistBtn;
+    @FindBy (css = "div.success.show")
+    private WebElement notification1;
 
     public HomePage(WebDriver givenDriver) {
         super(givenDriver);
@@ -89,6 +96,25 @@ public class HomePage extends Pages.BasePage {
         WebElement play = driver.findElement(By.cssSelector("[data-testid='play-btn']"));
         actions.moveToElement(play).perform();
         return  wait.until(ExpectedConditions.visibilityOf(play));
+    }
+    public void doubleClickPlaylist() {
+        // WebElement playlistk1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']")));
+        Actions a = new Actions(driver);
+        a.doubleClick(playlistk1).perform();
+    }
+
+    public void renamePlaylistk() {
+        // WebElement editPlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(/*"li.playlist.playlist.editing"*/"[name='name']")));
+        // Actions a = new Actions(driver);
+        // a.doubleClick(editPlaylistBtn).perform();
+        editPlaylistBtn.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
+        String newPlaylistName = "p";
+        editPlaylistBtn.sendKeys(newPlaylistName);
+        editPlaylistBtn.sendKeys(Keys.ENTER);
+    }
+    public String getUpdatedPlaylistSuccessMessage() {
+        //WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
+        return notification1.getText();
     }
 
 

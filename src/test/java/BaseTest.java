@@ -166,7 +166,7 @@ public class BaseTest {
     }
 
 
-    public static void navigateToLoginPage(){
+    public void navigateToLoginPage(){
         driver.get(url);
     }
 
