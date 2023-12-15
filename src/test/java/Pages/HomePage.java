@@ -98,15 +98,16 @@ public class HomePage extends Pages.BasePage {
         return  wait.until(ExpectedConditions.visibilityOf(play));
     }
     public void doubleClickPlaylist() {
-        // WebElement playlistk1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By) playlistk1));
         Actions a = new Actions(driver);
         a.doubleClick(playlistk1).perform();
     }
 
     public void renamePlaylistk() {
-        // WebElement editPlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(/*"li.playlist.playlist.editing"*/"[name='name']")));
+        //WebElement editPlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(/*"li.playlist.playlist.editing"*/"[name='name']")));
         // Actions a = new Actions(driver);
         // a.doubleClick(editPlaylistBtn).perform();
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By) editPlaylistBtn));
         editPlaylistBtn.sendKeys(Keys.chord(Keys.CONTROL,"A", Keys.BACK_SPACE));
         String newPlaylistName = "p";
         editPlaylistBtn.sendKeys(newPlaylistName);
@@ -114,6 +115,7 @@ public class HomePage extends Pages.BasePage {
     }
     public String getUpdatedPlaylistSuccessMessage() {
         //WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By) notification1));
         return notification1.getText();
     }
 
