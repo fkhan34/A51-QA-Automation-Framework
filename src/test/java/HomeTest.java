@@ -39,9 +39,7 @@ public class HomeTest extends BaseTest{
         HomePage homePage = new HomePage(driver);
         AllSongsPage songsPage = new AllSongsPage(driver);
         // Login
-        loginPage.provideEmail("demo@class.com");
-        loginPage.providePassword("te$t$tudent");
-        loginPage.clickSubmit();
+       loginPage.provideLoginSucceed();
         Thread.sleep(2000);
         homePage.chooseAllSongsList();
         songsPage.contextClickFirstSong();
@@ -67,9 +65,7 @@ public class HomeTest extends BaseTest{
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
 
-        loginPage.provideEmail("demo@class.com");
-        loginPage.providePassword("te$t$tudent");
-        loginPage.clickSubmit();
+        loginPage.provideLoginSucceed();
         Thread.sleep(2000);
         //Assertion
         Assert.assertTrue(homePage.hoverPlay().isDisplayed());

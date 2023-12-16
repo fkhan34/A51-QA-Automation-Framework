@@ -58,8 +58,8 @@ public class LoginPage extends pages.BasePage {
 // and returns an instance of the "LoginPage" class.
 
     public void provideLoginSucceed() {
-        provideEmail("demo@class.com");
-        providePassword("te$t$tudent");
+        provideEmail("faizan.khan@testpro.io");
+        providePassword("master21");
         clickSubmitBtn();
     }
 // The "provideLoginSucceed" method enters predefined email and password data
