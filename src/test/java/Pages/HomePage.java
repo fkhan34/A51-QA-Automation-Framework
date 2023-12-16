@@ -32,7 +32,7 @@ public class HomePage extends pages.BasePage {
     private WebElement notification;
     // notification: Represents the element on the page displaying a notification or message.
 
-    @FindBy(css = ".songs")
+    @FindBy(xpath = "//a[@href='#!/songs']")
     private WebElement allSongs;
     // allSongs: Represents the block or container containing all songs.
 
@@ -93,5 +93,7 @@ public class HomePage extends pages.BasePage {
 
 
     public void chooseAllSongsList() {
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@href='#!/songs']")));
+    actions.click(allSongs).perform();
     }
 }
