@@ -125,6 +125,8 @@ public class BaseTest {
 
         switch (browser){
 
+            case "chrome":
+                return driver = new ChromeDriver(new ChromeOptions());
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 return driver = new FirefoxDriver();
