@@ -161,7 +161,7 @@ public class BaseTest {
     }
 
     public static WebDriver lambdaTest() throws MalformedURLException {
-        String username = "faizan.khantestpro";
+        String username = "faizan.khan@testpro.io";
         String authKey = "yTQKLuAZkxA3LTS0mJjuJn30UT9EqrTr9UYfiBoQIRxk3XfwMt";
         String hub = "@hub.lambdatest.com/wd/hub";
 
