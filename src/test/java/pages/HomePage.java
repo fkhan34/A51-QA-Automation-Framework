@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends BasePage {
     @FindBy(css = "a.view-profile")
@@ -14,11 +15,13 @@ public class HomePage extends BasePage {
         super(givenDriver);
     }
     public HomePage clickProfileIcon(){
-        click((By) profileIcon);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.view-profile")));
+        profileIcon.click();
         return this;
     }
 
     public boolean isAvatarDisplayed(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[class='avatar']")));
         return avatarIcon.isDisplayed();
     }
 }

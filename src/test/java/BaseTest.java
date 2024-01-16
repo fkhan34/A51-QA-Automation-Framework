@@ -38,7 +38,7 @@ public class BaseTest {
 
     public static WebDriver driver = null;
 
-    public static String url = null;
+    public static String url = "https://qa.koel.app/";
     public static String gridUri = "http://192.168.0.69:4444";
 
    // public static String url = "https://qa.koel.app";

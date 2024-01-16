@@ -29,7 +29,7 @@ public class LoginTests extends BaseTest {
 
         loginPage.provideEmail("faizan.khan@testpro.io")
                 .providePassword("master21")
-                .clickSubmit();
+                .clickSubmitBtn();
 
         Assert.assertTrue(homePage.isAvatarDisplayed());
     }
