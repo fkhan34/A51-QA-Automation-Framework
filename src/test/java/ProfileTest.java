@@ -14,8 +14,8 @@ public class ProfileTest extends BaseTest {
         ProfilePage profilePage = new ProfilePage(driver);
 
         loginPage.provideEmail("faizan.khan@testpro.io")
-                .providePassword("te$t$tudent")
-                .clickSubmit();
+                .providePassword("master21")
+                .clickSubmitBtn();
 
         homePage.clickProfileIcon();
 
